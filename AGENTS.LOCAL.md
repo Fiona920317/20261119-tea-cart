@@ -56,13 +56,13 @@
 ```bash
 06-購物車/
 ├── index.html           # 購物車頁面入口
+├── AGENTS.local.md      # 專案指引
+├── README.md            # 專案通用說明
 ├── css/                 # CSS樣式表
 │   └── 購物車.css       # 購物車頁面樣式
 ├── js/                  # JavaScript 程式
 │   └── 購物車.js        # 購物車功能
 └── docs/                # 專案文件
-    ├── AGENTS.local.md  # 專案指引
-    ├── README.md        # 專案通用說明
     └── record.md        # 專案紀錄
 ```
 

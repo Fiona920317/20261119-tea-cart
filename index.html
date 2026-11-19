@@ -11,9 +11,7 @@
     <header class="site-header" tabindex="-1">
       <div class="page-width header-inner">
         <a class="brand" href="./index.html">島嶼茶室</a>
-        <nav aria-label="頁面導覽">
-          <a href="#menu">飲料菜單</a>
-        </nav>
+        <nav aria-label="頁面導覽"></nav>
       </div>
     </header>
 
@@ -22,151 +20,38 @@
         <h1>今天，喝杯茶。</h1>
         <p>從清爽原茶到香醇鮮奶茶，挑一杯喜歡的。</p>
       </div>
-
       <div class="shop-layout">
         <section id="menu" aria-labelledby="menu-heading">
           <h2 id="menu-heading">飲料菜單</h2>
-          <ul class="drink-grid">
-            <li class="drink-card drink-jasmine">
-              <div class="drink-art" aria-hidden="true">
-                <span class="tea-cup"></span>
-              </div>
-              <div class="drink-content">
-                <h3 id="drink-1">茉香綠茶</h3>
-                <p>清香回甘</p>
-                <div class="drink-actions">
-                  <strong>NT$ 35</strong>
-                  <button
-                    type="button"
-                    id="add-1"
-                    aria-labelledby="add-1 drink-1"
-                  >
-                    加入
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li class="drink-card drink-spring">
-              <div class="drink-art" aria-hidden="true">
-                <span class="tea-cup"></span>
-              </div>
-              <div class="drink-content">
-                <h3 id="drink-2">四季春青茶</h3>
-                <p>清爽花香</p>
-                <div class="drink-actions">
-                  <strong>NT$ 40</strong>
-                  <button
-                    type="button"
-                    id="add-2"
-                    aria-labelledby="add-2 drink-2"
-                  >
-                    加入
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li class="drink-card drink-black">
-              <div class="drink-art" aria-hidden="true">
-                <span class="tea-cup"></span>
-              </div>
-              <div class="drink-content">
-                <h3 id="drink-3">蜜香紅茶</h3>
-                <p>溫潤蜜香</p>
-                <div class="drink-actions">
-                  <strong>NT$ 45</strong>
-                  <button
-                    type="button"
-                    id="add-3"
-                    aria-labelledby="add-3 drink-3"
-                  >
-                    加入
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li class="drink-card drink-lemon">
-              <div class="drink-art" aria-hidden="true">
-                <span class="tea-cup"></span>
-              </div>
-              <div class="drink-content">
-                <h3 id="drink-4">冬瓜檸檬</h3>
-                <p>酸甜解渴</p>
-                <div class="drink-actions">
-                  <strong>NT$ 55</strong>
-                  <button
-                    type="button"
-                    id="add-4"
-                    aria-labelledby="add-4 drink-4"
-                  >
-                    加入
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li class="drink-card drink-pearl">
-              <div class="drink-art" aria-hidden="true">
-                <span class="tea-cup"></span>
-              </div>
-              <div class="drink-content">
-                <h3 id="drink-5">珍珠鮮奶茶</h3>
-                <p>濃醇奶香</p>
-                <div class="drink-actions">
-                  <strong>NT$ 65</strong>
-                  <button
-                    type="button"
-                    id="add-5"
-                    aria-labelledby="add-5 drink-5"
-                  >
-                    加入
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li class="drink-card drink-hojicha">
-              <div class="drink-art" aria-hidden="true">
-                <span class="tea-cup"></span>
-              </div>
-              <div class="drink-content">
-                <h3 id="drink-6">焙茶鮮奶</h3>
-                <p>醇厚焙香</p>
-                <div class="drink-actions">
-                  <strong>NT$ 75</strong>
-                  <button
-                    type="button"
-                    id="add-6"
-                    aria-labelledby="add-6 drink-6"
-                  >
-                    加入
-                  </button>
-                </div>
-              </div>
-            </li>
-          </ul>
+          <ul class="drink-grid"></ul>
+          <noscript><p>請啟用 JavaScript 以使用飲料菜單與購物車。</p></noscript>
         </section>
 
         <section id="cart" aria-labelledby="cart-heading">
-          <h2 id="cart-heading">購物車</h2>
+          <h2 id="cart-heading" tabindex="-1">購物車</h2>
           <div class="cart-panel">
-            <p class="preview-note">靜態預覽 · 購物操作尚未啟用</p>
             <p class="empty-cart">購物車是空的</p>
-            <dl class="cart-totals">
+            <ul class="cart-items" id="cart-list" hidden></ul>
+            <dl class="cart-totals" aria-live="polite" aria-atomic="true">
               <div>
                 <dt>總杯數</dt>
-                <dd>0 杯</dd>
+                <dd id="cart-total-qty">0 杯</dd>
               </div>
               <div>
                 <dt>總金額</dt>
-                <dd>NT$ 0</dd>
+                <dd id="cart-total-price">NT$ 0</dd>
               </div>
             </dl>
             <div class="cart-actions">
-              <button type="button" class="checkout-button">
+              <button type="button" class="checkout-button" disabled>
                 結帳
               </button>
-              <button type="button">清空購物車</button>
+              <button type="button" class="clear-cart-button" disabled>
+                清空購物車
+              </button>
             </div>
             <details class="cart-preview">
-              <summary>查看購物車有商品時的範例</summary>
+              <summary>查看珍珠鮮奶茶的靜態範例</summary>
               <ul class="cart-items">
                 <li>
                   <h3>珍珠鮮奶茶</h3>
@@ -179,6 +64,7 @@
                     >
                       <button
                         type="button"
+                        disabled
                         aria-label="減少一杯珍珠鮮奶茶"
                       >
                         −
@@ -186,6 +72,7 @@
                       <span aria-label="數量 4 杯">4</span>
                       <button
                         type="button"
+                        disabled
                         aria-label="增加一杯珍珠鮮奶茶"
                       >
                         +
@@ -218,7 +105,60 @@
         </section>
       </div>
     </main>
+    <template id="drink-template">
+      <li class="drink-card">
+        <div class="drink-art" aria-hidden="true">
+          <span class="tea-cup"></span>
+        </div>
+        <div class="drink-content">
+          <h3></h3>
+          <p></p>
+          <div class="drink-actions">
+            <strong></strong>
+            <button type="button">加入</button>
+          </div>
+        </div>
+      </li>
+    </template>
+    <template id="cart-item-template">
+      <li>
+        <h3></h3>
+        <p class="item-price"></p>
+        <div class="cart-item-actions">
+          <div class="quantity-controls" role="group">
+            <button type="button" class="decrease-quantity">−</button>
+            <span class="item-quantity"></span>
+            <button type="button" class="increase-quantity">+</button>
+          </div>
+          <strong class="item-subtotal"></strong>
+        </div>
+      </li>
+    </template>
+    <div class="mobile-cart">
+      <button
+        type="button"
+        class="mobile-cart-button"
+        aria-controls="cart"
+        aria-describedby="cart-kind-count"
+      >
+        購物車
+      </button>
+      <span class="mobile-cart-badge" id="cart-kind-count" aria-label="0 種商品"
+        >0</span
+      >
+    </div>
     <button type="button" class="back-to-top" hidden>回到頂部</button>
+    <dialog class="cart-dialog" aria-labelledby="pop-up-title">
+      <div class="filter" aria-hidden="true"></div>
+      <div class="pop-up">
+        <h3 class="pop-up__title" id="pop-up-title" tabindex="-1"></h3>
+        <div class="pop-up__text" hidden></div>
+        <form class="pop-up__btn-group" method="dialog">
+          <button type="button" class="confirm-btn">確認</button>
+          <button type="button" class="cancel-btn">取消</button>
+        </form>
+      </div>
+    </dialog>
     <script src="./js/購物車.js" defer></script>
   </body>
 </html>
