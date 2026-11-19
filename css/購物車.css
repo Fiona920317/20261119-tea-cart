@@ -312,24 +312,6 @@ button:enabled:active {
   margin-top: 0.85rem;
 }
 
-.cart-preview {
-  margin-top: 1rem;
-  border-top: 1px solid var(--line);
-  padding-top: 0.4rem;
-}
-
-.cart-preview summary {
-  min-height: 2.75rem;
-  padding-block: 0.65rem;
-  color: var(--green);
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.cart-preview summary:hover {
-  text-decoration: underline;
-}
-
 .cart-items {
   list-style: none;
   padding: 0 0 0.75rem;

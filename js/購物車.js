@@ -27,6 +27,9 @@ const DRINKS = [
   { id: "hojicha", name: "焙茶鮮奶", unitPrice: 75, description: "醇厚焙香" },
 ];
 
+const DISCOUNT_THRESHOLD = 200;
+const DISCOUNT_AMOUNT = 20;
+const CART_STORAGE_KEY = "island-tea-cart";
 const CART = new Map();
 const DRINK_GRID = document.querySelector(".drink-grid");
 const DRINK_TEMPLATE = document.querySelector("#drink-template");
@@ -36,6 +39,8 @@ const CART_HEADING = document.querySelector("#cart-heading");
 const EMPTY_CART = document.querySelector(".empty-cart");
 const TOTAL_QTY = document.querySelector("#cart-total-qty");
 const TOTAL_PRICE = document.querySelector("#cart-total-price");
+const CART_DISCOUNT = document.querySelector("#cart-discount");
+const FINAL_PRICE = document.querySelector("#cart-final-price");
 const CHECKOUT_BUTTON = document.querySelector(".checkout-button");
 const MOBILE_CART_BUTTON = document.querySelector(".mobile-cart-button");
 const CART_KIND_COUNT = document.querySelector("#cart-kind-count");
@@ -83,6 +88,13 @@ function CreateCartItem(drink) {
   return { ...drink, qty: 0, subTotal: 0, row };
 }
 
+function UpdateCartItem(item, qty) {
+  item.qty = qty;
+  item.subTotal = item.unitPrice * qty;
+  item.row.querySelector(".item-quantity").textContent = `${qty} 杯`;
+  item.row.querySelector(".item-subtotal").textContent = `小計 ${FormatPrice(item.subTotal)}`;
+}
+
 function ChangeQuantity(drink, change) {
   let item = CART.get(drink.id);
   if (!item) {
@@ -91,10 +103,8 @@ function ChangeQuantity(drink, change) {
     CART.set(drink.id, item);
   }
 
-  item.qty += change;
-  item.subTotal = item.unitPrice * item.qty;
-
-  if (item.qty === 0) {
+  const qty = item.qty + change;
+  if (qty === 0) {
     if (item.row.contains(document.activeElement)) {
       const nearbyRow = item.row.nextElementSibling || item.row.previousElementSibling;
       const focusTarget = nearbyRow?.querySelector(".decrease-quantity") || CART_HEADING;
@@ -103,14 +113,14 @@ function ChangeQuantity(drink, change) {
     item.row.remove();
     CART.delete(drink.id);
   } else {
-    item.row.querySelector(".item-quantity").textContent = `${item.qty} 杯`;
-    item.row.querySelector(".item-subtotal").textContent = `小計 ${FormatPrice(item.subTotal)}`;
+    UpdateCartItem(item, qty);
   }
 
   UpdateCartSummary();
+  SaveCart();
 }
 
-function UpdateCartSummary() {
+function GetCartTotals() {
   let totalQty = 0;
   let totalPrice = 0;
 
@@ -119,8 +129,49 @@ function UpdateCartSummary() {
     totalPrice += item.subTotal;
   }
 
+  const discount = totalPrice >= DISCOUNT_THRESHOLD ? DISCOUNT_AMOUNT : 0;
+  return { totalQty, totalPrice, discount, finalPrice: totalPrice - discount };
+}
+
+function SaveCart() {
+  const items = Array.from(CART.values(), ({ id, qty }) => ({ id, qty }));
+
+  try {
+    window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+  } catch {
+    // 購物車仍可在目前頁面使用。
+  }
+}
+
+function RestoreCart() {
+  let items;
+  try {
+    items = JSON.parse(window.localStorage.getItem(CART_STORAGE_KEY));
+  } catch {
+    return;
+  }
+
+  if (!Array.isArray(items)) return;
+
+  for (const savedItem of items) {
+    const drink = DRINKS.find(({ id }) => id === savedItem?.id);
+    if (!drink || CART.has(drink.id)) continue;
+
+    const { qty } = savedItem;
+    if (!Number.isSafeInteger(qty) || qty <= 0 || !Number.isSafeInteger(qty * drink.unitPrice)) continue;
+
+    const item = CreateCartItem(drink);
+    UpdateCartItem(item, qty);
+    CART.set(drink.id, item);
+  }
+}
+
+function UpdateCartSummary() {
+  const { totalQty, totalPrice, discount, finalPrice } = GetCartTotals();
   TOTAL_QTY.textContent = `${totalQty} 杯`;
   TOTAL_PRICE.textContent = FormatPrice(totalPrice);
+  CART_DISCOUNT.textContent = discount > 0 ? `−${FormatPrice(discount)}` : FormatPrice(0);
+  FINAL_PRICE.textContent = FormatPrice(finalPrice);
 
   const kindCount = CART.size;
   CART_KIND_COUNT.textContent = String(kindCount);
@@ -168,6 +219,7 @@ function EmptyCart() {
   CART_HEADING.focus({ preventScroll: true });
   CART.clear();
   CART_LIST.replaceChildren();
+  SaveCart();
   UpdateCartSummary();
 }
 
@@ -180,8 +232,9 @@ function SubmitOrder() {
     items.append(line);
   }
 
+  const { totalQty, totalPrice, discount, finalPrice } = GetCartTotals();
   const summary = document.createElement("p");
-  summary.textContent = `總杯數：${TOTAL_QTY.textContent}，總金額：${TOTAL_PRICE.textContent}`;
+  summary.textContent = `總杯數：${totalQty} 杯。折扣前：${FormatPrice(totalPrice)}，折抵：${FormatPrice(discount)}，應付金額：${FormatPrice(finalPrice)}。`;
   ORDER_DETAILS.replaceChildren(items, summary);
   ORDER_DETAILS.hidden = false;
 
@@ -198,6 +251,7 @@ function ConfirmCheckout() {
 }
 
 RenderMenu();
+RestoreCart();
 UpdateCartSummary();
 CLEAR_BUTTON.addEventListener("click", ConfirmClearCart);
 CHECKOUT_BUTTON.addEventListener("click", ConfirmCheckout);
