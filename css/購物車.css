@@ -1,0 +1,292 @@
+:root {
+  color-scheme: light;
+  --paper: #f8f8ee;
+  --ink: #193426;
+  --muted: #4f6255;
+  --line: #ced8c7;
+  --green: #24583d;
+  --surface: #fff;
+  font-family: system-ui, "Microsoft JhengHei", sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+h1, h2, h3, p, ul, dl, dd { margin: 0; }
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 3px solid #ad421c;
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  z-index: 1;
+  inset: .75rem auto auto .75rem;
+  padding: .65rem 1rem;
+  background: var(--surface);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus { transform: none; }
+
+.page-width { width: min(100% - 2rem, 72rem); margin-inline: auto; }
+
+.site-header { background: var(--green); color: #fff; }
+
+.site-header :focus-visible { outline-color: #fff; }
+
+.header-inner,
+.header-inner nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem 1rem;
+}
+
+.header-inner {
+  justify-content: space-between;
+  padding-block: .65rem;
+}
+
+.header-inner a {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  min-height: 2.75rem;
+  padding-inline: .5rem;
+  border-radius: .4rem;
+  text-underline-offset: .25em;
+}
+
+.header-inner a:hover { background: #163f2a; }
+.brand { font-size: 1.25rem; font-weight: 800; text-decoration: none; }
+.cart-link span { font-size: .875rem; }
+
+main { padding-bottom: 3rem; }
+
+.intro {
+  padding-block: clamp(2rem, 6vw, 4.5rem);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-family: "Noto Serif TC", "PMingLiU", serif;
+  font-size: clamp(2.3rem, 7vw, 5rem);
+  line-height: 1.15;
+  margin-bottom: .7rem;
+}
+
+.intro p, .drink-content p, .preview-note, .cart-items p { color: var(--muted); }
+h2 { margin-bottom: .85rem; font-size: 1.5rem; }
+h3 { font-size: 1.1rem; }
+
+.shop-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr);
+  align-items: start;
+  gap: 1.5rem;
+}
+
+.drink-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.drink-card, .cart-panel {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--surface);
+  min-width: 0;
+}
+
+.drink-card { overflow: hidden; }
+.drink-jasmine { --art: #e4ebc9; --tea: #a2ad53; }
+.drink-spring { --art: #dcead8; --tea: #839b56; }
+.drink-black { --art: #f5dfce; --tea: #ab5835; }
+.drink-lemon { --art: #f7edbd; --tea: #c69031; }
+.drink-pearl { --art: #f1e3d8; --tea: #b57e58; }
+.drink-hojicha { --art: #eadfda; --tea: #926753; }
+
+.drink-art {
+  display: grid;
+  place-items: center;
+  min-height: 8.5rem;
+  background: radial-gradient(circle, #ffffff80 0 32%, transparent 33%), var(--art);
+}
+
+.tea-cup {
+  position: relative;
+  width: 3.55rem;
+  height: 4.1rem;
+  border-radius: .2rem .2rem .85rem .85rem;
+  background: linear-gradient(105deg, #ffffff45, transparent 45%), var(--tea);
+  box-shadow: .3rem .5rem 0 #19342624;
+  transform: rotate(-9deg);
+}
+
+.tea-cup::before {
+  content: "";
+  position: absolute;
+  inset: -.25rem -.25rem auto;
+  height: .5rem;
+  border-radius: .25rem;
+  background: var(--ink);
+}
+
+.tea-cup::after {
+  content: "";
+  position: absolute;
+  inset: -1.25rem .7rem auto auto;
+  width: .26rem;
+  height: 1.15rem;
+  background: var(--ink);
+  transform: rotate(12deg);
+}
+
+.drink-content, .cart-panel { padding: 1rem; }
+
+.drink-actions, .cart-item-actions, .cart-totals div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .4rem .6rem;
+}
+
+.drink-actions { margin-top: .8rem; }
+
+button {
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  padding: .4rem .75rem;
+  border: 1px solid #9eafa1;
+  border-radius: .55rem;
+  background: var(--surface);
+  color: var(--green);
+  font: inherit;
+}
+
+button:hover {
+  background: #e4eee5;
+  border-color: var(--green);
+  cursor: pointer;
+}
+
+button:active {
+  background: #d1e2d3;
+}
+
+.checkout-button, .back-to-top {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+}
+
+.checkout-button:hover, .back-to-top:hover {
+  background: #163f2a;
+}
+
+.checkout-button:active, .back-to-top:active {
+  background: #102f20;
+}
+
+.back-to-top {
+  display: none;
+}
+
+.preview-note { font-size: .875rem; }
+
+.empty-cart {
+  margin-block: .85rem;
+  padding: 1rem .75rem;
+  border: 1px dashed #9eafa1;
+  border-radius: .65rem;
+  background: #f6f8f3;
+  text-align: center;
+}
+
+.cart-totals { display: grid; gap: .35rem; }
+
+.cart-totals div:last-child {
+  padding-top: .35rem;
+  border-top: 1px solid var(--line);
+  font-weight: 700;
+}
+
+.cart-actions {
+  display: grid;
+  gap: .5rem;
+  margin-top: .85rem;
+}
+
+.cart-preview {
+  margin-top: 1rem;
+  border-top: 1px solid var(--line);
+  padding-top: .4rem;
+}
+
+.cart-preview summary {
+  min-height: 2.75rem;
+  padding-block: .65rem;
+  color: var(--green);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cart-preview summary:hover { text-decoration: underline; }
+
+.cart-items {
+  list-style: none;
+  padding: 0 0 .75rem;
+}
+
+.cart-item-actions { margin-top: .5rem; }
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .tea-cup { transition: transform 220ms ease; }
+  .drink-card:hover .tea-cup { transform: translateY(-.3rem) rotate(0); }
+}
+
+@media (max-width: 58rem) {
+  .drink-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 44rem) {
+  .shop-layout { grid-template-columns: minmax(0, 1fr); }
+
+  main {
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .back-to-top:not([hidden]) {
+    display: block;
+    position: fixed;
+    z-index: 2;
+    right: max(1rem, env(safe-area-inset-right, 0px));
+    bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 .25rem .75rem #19342633;
+  }
+}
+
+@media (max-width: 24rem) {
+  .drink-grid { grid-template-columns: minmax(0, 1fr); }
+}
