@@ -23,7 +23,7 @@
 
 ```text
 06-購物車/
-├── AGENTS.LOCAL.md      # 專案指引與功能需求
+├── .gitignore
 ├── README.md            # 專案簡介與使用方式
 ├── index.html           # 飲料菜單及購物車頁面
 ├── css/
